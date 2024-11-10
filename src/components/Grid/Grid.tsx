@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState, useEffect } from "react";
+import { useCallback, useMemo, useRef, useState, useEffect, MouseEvent } from "react";
 import Row from "./Row";
 import './Grid.css';
 
@@ -37,11 +37,24 @@ export default function Grid({ width, height }: GridProps) {
     [setZoomLevel],
   );
 
+  const handleMouseDown = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      event.preventDefault();
+    },
+    [],
+  );
+
+  const handleMouseMove = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      if ((event.buttons & 4) && gridContainerRef.current) {
+        gridContainerRef.current.scrollBy(-event.movementX, -event.movementY);
+      }
+    },
+    [gridContainerRef],
+  );
+
   useEffect(
     () => {
-      console.log(zoomLevel);
-      console.log(gridRef);
-
       if (gridRef.current) {
         gridRef.current.style.zoom = '' + Math.pow(1.1, zoomLevel)
       }
@@ -69,7 +82,7 @@ export default function Grid({ width, height }: GridProps) {
 
   return (
     <div className="grid-container-outer">
-      <div className="grid-container" ref={gridContainerRef}>
+      <div className="grid-container" ref={gridContainerRef} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}>
         <div className="grid" ref={gridRef}>{renderedRows}</div>
       </div>
     </div>
