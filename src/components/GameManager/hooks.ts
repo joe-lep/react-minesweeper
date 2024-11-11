@@ -7,3 +7,5 @@ export const useGameConfig: () => GameConfig = () => {
 
   return { width, height };
 };
+
+export const useInitializeGameConfig = () => useContext(gameContext).initializeGameConfig;
