@@ -1,0 +1,9 @@
+import { useContext } from "react";
+import { GameConfig } from "../../types";
+import gameContext from "./context";
+
+export const useGameConfig: () => GameConfig = () => {
+  const { width, height } = useContext(gameContext);
+
+  return { width, height };
+};

@@ -1,19 +1,16 @@
 import { useCallback, useMemo, useRef, useState, useEffect, MouseEvent } from "react";
 import Row from "./Row";
 import './Grid.css';
+import { useGameConfig } from "../GameManager";
 
 const MIN_ZOOM = -10;
 const MAX_ZOOM = 10;
 
-export interface GridProps {
-  width: number
-  height: number
-}
-
-export default function Grid({ width, height }: GridProps) {
+export default function Grid() {
   const gridContainerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const [zoomLevel, setZoomLevel] = useState(0);
+  const { width, height } = useGameConfig();
 
   const renderedRows = useMemo(
     () => Array.from({ length: height }).map((_, index) => (
