@@ -8,12 +8,16 @@ interface GameContext {
   // mineCount: number
   // mineLocations: Map<number, boolean>
   initializeGameConfig: ({ width, height }: GameConfig) => void
+  revealedCells: Array<boolean>
+  revealCell: (row: number, column: number) => void
 }
 
 const gameContext = createContext<GameContext>({
   width: DEFAULT_WIDTH,
   height: DEFAULT_HEIGHT,
   initializeGameConfig: () => {},
+  revealedCells: [],
+  revealCell: () => {},
 });
 
 export default gameContext;

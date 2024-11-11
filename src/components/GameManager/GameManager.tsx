@@ -15,15 +15,30 @@ export function GameManager({ children }: GameManagerProps) {
     height: DEFAULT_HEIGHT,
   });
 
+  const [revealedCells, setRevealedCells] = useState<Array<boolean>>([]);
+
+  const revealCell = useCallback(
+    (row: number, column: number) => {
+      setRevealedCells((prevState) => {
+        const newState = [...prevState];
+        newState[row * configState.width + column] = true;
+
+        return newState;
+      });
+    },
+    [setRevealedCells, configState],
+  );
+
   const initializeGameConfig = useCallback(
     ({ width, height }: GameConfig) => {
-      setConfigState({ width, height })
+      setConfigState({ width, height });
+      setRevealedCells(Array.from({ length: width * height }).map(() => false));
     },
-    [setConfigState],
+    [setConfigState, setRevealedCells],
   );
 
   return (
-    <Provider value={{...configState, initializeGameConfig}}>
+    <Provider value={{...configState, initializeGameConfig, revealedCells, revealCell }}>
       {children}
     </Provider>
   );

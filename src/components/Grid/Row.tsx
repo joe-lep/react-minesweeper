@@ -9,7 +9,7 @@ export interface RowProps {
 export default function Row({ rowIndex, width }: RowProps) {
   const renderedCells = useMemo(
     () => Array.from({ length: width }).map((_, index) => (
-      <Cell key={`${rowIndex},${index}`} />
+      <Cell key={`${rowIndex},${index}`} rowIndex={rowIndex} columnIndex={index} />
     )),
     [rowIndex, width]
   );

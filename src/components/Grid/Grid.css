@@ -56,3 +56,14 @@
     background-color: lightblue;
     border-color: turquoise;
 }
+
+.cell-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: lightgray;
+    font-size: 32px;
+    font-weight: 700;
+}
