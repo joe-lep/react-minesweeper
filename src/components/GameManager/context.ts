@@ -5,8 +5,8 @@ import { GameConfig } from "../../types";
 interface GameContext {
   width: number
   height: number
-  // mineCount: number
-  // mineLocations: Map<number, boolean>
+  mineCount: number
+  minePositions: Record<number, boolean>
   initializeGameConfig: ({ width, height }: GameConfig) => void
   revealedCells: Array<boolean>
   revealCell: (row: number, column: number) => void
@@ -15,6 +15,8 @@ interface GameContext {
 const gameContext = createContext<GameContext>({
   width: DEFAULT_WIDTH,
   height: DEFAULT_HEIGHT,
+  mineCount: 0,
+  minePositions: {},
   initializeGameConfig: () => {},
   revealedCells: [],
   revealCell: () => {},

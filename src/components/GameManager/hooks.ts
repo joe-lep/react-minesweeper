@@ -3,17 +3,18 @@ import { GameConfig } from "../../types";
 import gameContext from "./context";
 
 export const useGameConfig: () => GameConfig = () => {
-  const { width, height } = useContext(gameContext);
+  const { width, height, mineCount } = useContext(gameContext);
 
-  return { width, height };
+  return { width, height, mineCount };
 };
 
 export const useInitializeGameConfig = () => useContext(gameContext).initializeGameConfig;
 
 export const useCellContext = (row: number, column: number) => {
-  const { revealedCells, revealCell, width } = useContext(gameContext);
+  const { revealedCells, revealCell, width, minePositions } = useContext(gameContext);
 
   const isRevealed = revealedCells[row * width + column] ?? false;
+  const hasMine = minePositions[row * width + column] ?? false;
 
-  return { isRevealed, revealCell };
+  return { isRevealed, revealCell, hasMine };
 };

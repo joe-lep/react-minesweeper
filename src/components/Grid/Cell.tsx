@@ -9,7 +9,7 @@ interface CellProps {
 }
 
 export default function Cell({ rowIndex, columnIndex }: CellProps) {
-  const { isRevealed, revealCell } = useCellContext(rowIndex, columnIndex);
+  const { isRevealed, revealCell, hasMine } = useCellContext(rowIndex, columnIndex);
 
   const handleClick = useCallback(
     () => {
@@ -22,7 +22,7 @@ export default function Cell({ rowIndex, columnIndex }: CellProps) {
 
   return (
     <span className="cell" tabIndex={0} onClick={handleClick}>
-      {isRevealed ? (<CellContent />) : (<CellCover />)}
+      {isRevealed ? (<CellContent hasMine={hasMine} />) : (<CellCover />)}
     </span>
   );
 }
