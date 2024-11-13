@@ -10,6 +10,9 @@ interface GameContext {
   initializeGameConfig: ({ width, height }: GameConfig) => void
   revealedCells: Array<boolean>
   revealCell: (row: number, column: number) => void
+  neighborCounts: Array<number>
+  flagState: Array<number>
+  updateCellFlag: (row: number, column: number, newFlagValue: number) => void
 }
 
 const gameContext = createContext<GameContext>({
@@ -20,6 +23,9 @@ const gameContext = createContext<GameContext>({
   initializeGameConfig: () => {},
   revealedCells: [],
   revealCell: () => {},
+  neighborCounts: [],
+  flagState: [],
+  updateCellFlag: () => {},
 });
 
 export default gameContext;

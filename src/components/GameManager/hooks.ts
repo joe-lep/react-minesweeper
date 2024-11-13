@@ -11,10 +11,13 @@ export const useGameConfig: () => GameConfig = () => {
 export const useInitializeGameConfig = () => useContext(gameContext).initializeGameConfig;
 
 export const useCellContext = (row: number, column: number) => {
-  const { revealedCells, revealCell, width, minePositions } = useContext(gameContext);
+  const { revealedCells, revealCell, width, minePositions, neighborCounts, flagState, updateCellFlag } = useContext(gameContext);
+  const cellIndex = row * width + column;
 
-  const isRevealed = revealedCells[row * width + column] ?? false;
-  const hasMine = minePositions[row * width + column] ?? false;
+  const isRevealed = revealedCells[cellIndex] ?? false;
+  const hasMine = minePositions[cellIndex] ?? false;
+  const neighboringMineCount = neighborCounts[cellIndex];
+  const cellFlag = flagState[cellIndex] ?? 0;
 
-  return { isRevealed, revealCell, hasMine };
+  return { isRevealed, revealCell, hasMine, neighboringMineCount, cellFlag, updateCellFlag };
 };

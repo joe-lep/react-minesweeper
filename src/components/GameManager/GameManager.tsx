@@ -1,8 +1,8 @@
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import { DEFAULT_HEIGHT, DEFAULT_MINE_COUNT, DEFAULT_WIDTH } from "../../config/values";
 import gameContext from './context';
 import { GameConfig } from "../../types";
-import { generateMinePositions } from "./utils";
+import { generateMinePositions, generateNeighborCounts } from "./utils";
 
 const { Provider } = gameContext;
 
@@ -21,9 +21,9 @@ export function GameManager({ children }: GameManagerProps) {
 
   const [ minePositions, setMinePositions ] = useState<Record<number, boolean>>({});
 
-  useEffect(() => {
-    console.log('minePositons', minePositions);
-  }, [minePositions])
+  const [ neighborCounts, setNeighborCounts ] = useState<Array<number>>([]);
+
+  const [flagState, setFlagState] = useState<Array<number>>([]);
 
   const revealCell = useCallback(
     (row: number, column: number) => {
@@ -37,17 +37,32 @@ export function GameManager({ children }: GameManagerProps) {
     [setRevealedCells, configState],
   );
 
+  const updateCellFlag = useCallback(
+    (row: number, column: number, newFlagValue: number) => {
+      setFlagState((prevState) => {
+        const newState = [...prevState];
+        newState[row * configState.width + column] = newFlagValue;
+
+        return newState;
+      });
+    },
+    [setFlagState, configState],
+  );
+
   const initializeGameConfig = useCallback(
     ({ width, height, mineCount }: GameConfig) => {
       setConfigState({ width, height, mineCount });
       setRevealedCells(Array.from({ length: width * height }).map(() => false));
-      setMinePositions(generateMinePositions(mineCount, width * height));
+      const newMinePositions = generateMinePositions(mineCount, width * height);
+      setMinePositions(newMinePositions);
+      setNeighborCounts(generateNeighborCounts(newMinePositions, width, height));
+      setFlagState(Array.from({ length: width * height }).map(() => 0));
     },
-    [setConfigState, setRevealedCells],
+    [setConfigState, setRevealedCells, setMinePositions, setNeighborCounts],
   );
 
   return (
-    <Provider value={{...configState, minePositions, initializeGameConfig, revealedCells, revealCell }}>
+    <Provider value={{...configState, minePositions, initializeGameConfig, revealedCells, revealCell, neighborCounts, flagState, updateCellFlag }}>
       {children}
     </Provider>
   );

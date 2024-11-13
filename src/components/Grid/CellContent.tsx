@@ -1,9 +1,10 @@
 interface CellContentProps {
   hasMine: boolean
+  neighboringMineCount: number
 }
 
-export default function CellContent({ hasMine }: CellContentProps) {
+export default function CellContent({ hasMine, neighboringMineCount }: CellContentProps) {
   return (
-    <div className="cell-content">{hasMine ? 'M' : 0}</div>
+    <div className="cell-content">{hasMine ? 'M' : neighboringMineCount}</div>
   );
 }
