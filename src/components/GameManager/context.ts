@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from "../../config/values";
 import { GameConfig } from "../../types";
+import { GAME_READY } from "../../config/game-phases";
 
 interface GameContext {
   width: number
@@ -13,6 +14,7 @@ interface GameContext {
   neighborCounts: Array<number>
   flagState: Array<number>
   updateCellFlag: (row: number, column: number, newFlagValue: number) => void
+  gamePhase: string
 }
 
 const gameContext = createContext<GameContext>({
@@ -26,6 +28,7 @@ const gameContext = createContext<GameContext>({
   neighborCounts: [],
   flagState: [],
   updateCellFlag: () => {},
+  gamePhase: GAME_READY,
 });
 
 export default gameContext;

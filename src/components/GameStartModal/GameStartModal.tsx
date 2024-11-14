@@ -1,13 +1,14 @@
 import { ChangeEvent, useCallback, useState } from "react";
 import { useGameConfig, useInitializeGameConfig } from "../GameManager";
 import Modal from "../Modal";
+import { DEFAULT_MINE_COUNT } from "../../config/values";
 
 export default function GameStartModal() {
-  const { width, height } = useGameConfig();
+  const { width, height, mineCount } = useGameConfig();
   const initializeGameConfig = useInitializeGameConfig();
   const [newWidth, setNewWidth] = useState(width);
   const [newHeight, setNewHeight] = useState(height);
-  const [newMineCount, setNewMineCount] = useState(10);
+  const [newMineCount, setNewMineCount] = useState(mineCount || DEFAULT_MINE_COUNT);
   const [open, setOpen] = useState(false);
 
   const handleOpenClick = useCallback(
@@ -70,13 +71,13 @@ export default function GameStartModal() {
   return (
     <>
       <button type="button" onClick={handleOpenClick}>Start Game</button>
-      <Modal open={open}>
+      <Modal open={open || !mineCount}>
         <h2>New Game</h2>
         <div><label>Width: <input type="number" value={newWidth} onChange={handleWidthChange} /></label></div>
         <div><label>Width: <input type="number" value={newHeight} onChange={handleHeightChange} /></label></div>
         <div><label>Mines: <input type="number" value={newMineCount} onChange={handleMineCountChange} /></label></div>
         <div>
-          <button type="button" onClick={handleCloseClick}>Cancel</button>
+          <button type="button" onClick={handleCloseClick} disabled={!mineCount}>Cancel</button>
           <button type="button" onClick={handleSubmitClick}>Submit</button>
         </div>
       </Modal>

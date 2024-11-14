@@ -1,3 +1,5 @@
+import { CellPosition } from "../../types";
+
 export function generateMinePositions(mineCount: number, cellCount: number) {
   const positionArray = Array.from({ length: cellCount }).map((_, index) => index);
 
@@ -43,4 +45,31 @@ function countNeighbors(index: number, minePositionSet: Record<number, boolean>,
 
 function isMinePosition(rowIndex: number, columnIndex: number, minePositionSet: Record<number, boolean>, width: number, height: number) {
   return rowIndex >= 0 && columnIndex >= 0 && rowIndex < height && columnIndex < width && minePositionSet[rowIndex * width + columnIndex];
+}
+
+export function searchZeroNeighborCells(neighborCounts: Array<number>, currentCell: CellPosition, cellMap: Record<string, CellPosition>, width: number, height: number) {
+  const { row, column } = currentCell;
+
+  if (row < 0 || row >= height || column < 0 || column >= width) {
+    return;
+  }
+
+  const cellKey = `${row},${column}`;
+  if (cellMap[cellKey]) {
+    return;
+  }
+
+  cellMap[cellKey] = currentCell;
+
+  if (neighborCounts[row * width + column] > 0) {
+    return;
+  }
+
+  for (let i = -1; i <= 1; i++) {
+    for (let j = -1; j <= 1; j++) {
+      if (!(i === 0 && j === 0)) {
+        searchZeroNeighborCells(neighborCounts, {row: row + i, column: column + j}, cellMap, width, height);
+      }
+    }
+  }
 }
