@@ -13,3 +13,8 @@ export type RevelationState = {
   revealedCells: Array<boolean>;
   coveredCellCount: number;
 }
+
+export type FlagStateAndCount = {
+  flagState: Array<number>;
+  flagCount: number;
+}

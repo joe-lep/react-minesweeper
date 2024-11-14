@@ -21,3 +21,7 @@ export const useCellContext = (row: number, column: number) => {
 
   return { isRevealed, revealCell, hasMine, neighboringMineCount, cellFlag, updateCellFlag };
 };
+
+export const useFlagCount = () => useContext(gameContext).flagCount;
+
+export const useGamePhase = () => useContext(gameContext).gamePhase;

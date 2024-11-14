@@ -1,9 +1,10 @@
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from "../../config/values";
 import gameContext from './context';
-import { CellPosition, GameConfig, RevelationState } from "../../types";
+import { CellPosition, FlagStateAndCount, GameConfig, RevelationState } from "../../types";
 import { generateMinePositions, generateNeighborCounts, searchZeroNeighborCells } from "./utils";
 import { GAME_IN_PROGRESS, GAME_LOST, GAME_READY, GAME_WON } from "../../config/game-phases";
+import { NO_FLAG, YES_FLAG } from "../../config/flags";
 
 const { Provider } = gameContext;
 
@@ -20,13 +21,18 @@ export function GameManager({ children }: GameManagerProps) {
 
   const [minePositions, setMinePositions] = useState<Record<number, boolean>>({});
   const [neighborCounts, setNeighborCounts] = useState<Array<number>>([]);
-  const [flagState, setFlagState] = useState<Array<number>>([]);
+  const [flagStateAndCount, setFlagStateAndCount] = useState<FlagStateAndCount>({
+    flagState: [],
+    flagCount: 0,
+  });
   const [gamePhase, setGamePhase] = useState<string>(GAME_READY)
   const [mineWasHit, setMineWasHit] = useState(false);
   const [revalationState, setRevelationState] = useState<RevelationState>({
     revealedCells: [],
     coveredCellCount: DEFAULT_WIDTH * DEFAULT_HEIGHT,
   });
+
+  const { flagState, flagCount } = flagStateAndCount;
 
   useEffect(() => {
     if (mineWasHit) {
@@ -93,14 +99,16 @@ export function GameManager({ children }: GameManagerProps) {
 
   const updateCellFlag = useCallback(
     (row: number, column: number, newFlagValue: number) => {
-      setFlagState((prevState) => {
-        const newState = [...prevState];
-        newState[row * configState.width + column] = newFlagValue;
+      setFlagStateAndCount((prevState) => {
+        const newFlagState = [...prevState.flagState];
+        const rowIndex = row * configState.width + column;
+        newFlagState[rowIndex] = newFlagValue;
+        const newFlagCount = prevState.flagCount - (prevState.flagState[rowIndex] === YES_FLAG ? 1 : 0) + (newFlagValue === YES_FLAG ? 1 : 0);
 
-        return newState;
+        return { flagState: newFlagState, flagCount: newFlagCount};
       });
     },
-    [setFlagState, configState],
+    [setFlagStateAndCount, configState],
   );
 
   const initializeGameConfig = useCallback(
@@ -113,7 +121,7 @@ export function GameManager({ children }: GameManagerProps) {
       const newMinePositions = generateMinePositions(mineCount, width * height);
       setMinePositions(newMinePositions);
       setNeighborCounts(generateNeighborCounts(newMinePositions, width, height));
-      setFlagState(Array.from({ length: width * height }).map(() => 0));
+      setFlagStateAndCount({ flagState: Array.from({ length: width * height }).map(() => NO_FLAG), flagCount: 0 });
       setGamePhase(GAME_IN_PROGRESS);
       setMineWasHit(false);
     },
@@ -121,7 +129,7 @@ export function GameManager({ children }: GameManagerProps) {
   );
 
   return (
-    <Provider value={{...configState, minePositions, initializeGameConfig, revealedCells: revalationState.revealedCells, revealCell, neighborCounts, flagState, updateCellFlag, gamePhase }}>
+    <Provider value={{...configState, minePositions, initializeGameConfig, revealedCells: revalationState.revealedCells, revealCell, neighborCounts, flagState, flagCount, updateCellFlag, gamePhase }}>
       {children}
     </Provider>
   );

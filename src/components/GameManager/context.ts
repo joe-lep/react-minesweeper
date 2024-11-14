@@ -13,6 +13,7 @@ interface GameContext {
   revealCell: (row: number, column: number) => void
   neighborCounts: Array<number>
   flagState: Array<number>
+  flagCount: number
   updateCellFlag: (row: number, column: number, newFlagValue: number) => void
   gamePhase: string
 }
@@ -27,6 +28,7 @@ const gameContext = createContext<GameContext>({
   revealCell: () => {},
   neighborCounts: [],
   flagState: [],
+  flagCount: 0,
   updateCellFlag: () => {},
   gamePhase: GAME_READY,
 });
