@@ -1,3 +1,7 @@
 .header-container {
     grid-area: header;
 }
+
+.header-container h1 {
+    font-size: 32px;
+}

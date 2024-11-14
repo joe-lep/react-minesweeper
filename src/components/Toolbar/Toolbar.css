@@ -1,3 +1,6 @@
 .toolbar-container {
     grid-area: toolbar;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
