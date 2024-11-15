@@ -105,6 +105,7 @@ export default function StopWatch({ className, apiRef }: StopWatchProps) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [isRunning],
   );
 
