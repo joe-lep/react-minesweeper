@@ -17,8 +17,24 @@
 
 .modal {
     background: white;
-    min-width: 640px;
+    width: 640px;
     min-height: 480px;
-    max-width: calc(100vw - 16px);
-    max-height: calc(100vh - 16px);
+    max-width: calc(100vw - 64px);
+    max-height: calc(100vh - 32px);
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border: 1px solid black;
+}
+
+.modal-header {
+    flex-grow: 0;
+}
+
+.modal-body {
+    flex-grow: 1;
+}
+
+.modal-footer {
+    flex-grow: 0;
 }

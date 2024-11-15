@@ -72,11 +72,13 @@ export default function GameStartModal() {
     <>
       <button type="button" onClick={handleOpenClick}>Start Game</button>
       <Modal open={open || !mineCount}>
-        <h2>New Game</h2>
-        <div><label>Width: <input type="number" value={newWidth} onChange={handleWidthChange} /></label></div>
-        <div><label>Width: <input type="number" value={newHeight} onChange={handleHeightChange} /></label></div>
-        <div><label>Mines: <input type="number" value={newMineCount} onChange={handleMineCountChange} /></label></div>
-        <div>
+        <h2 className="modal-header">New Game</h2>
+        <div className="modal-body">
+          <div><label>Width: <input type="number" value={newWidth} onChange={handleWidthChange} /></label></div>
+          <div><label>Width: <input type="number" value={newHeight} onChange={handleHeightChange} /></label></div>
+          <div><label>Mines: <input type="number" value={newMineCount} onChange={handleMineCountChange} /></label></div>
+        </div>
+        <div className="modal-footer">
           <button type="button" onClick={handleCloseClick} disabled={!mineCount}>Cancel</button>
           <button type="button" onClick={handleSubmitClick}>Submit</button>
         </div>
