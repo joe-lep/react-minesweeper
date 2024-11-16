@@ -5,6 +5,7 @@ import { CellPosition, FlagStateAndCount, GameConfig, RevelationState } from "..
 import { generateMinePositions, generateNeighborCounts, searchZeroNeighborCells } from "./utils";
 import { GAME_IN_PROGRESS, GAME_LOST, GAME_READY, GAME_WON } from "../../config/game-phases";
 import { NO_FLAG, YES_FLAG } from "../../config/flags";
+import { useControls } from "react-zoom-pan-pinch";
 
 const { Provider } = gameContext;
 
@@ -33,6 +34,8 @@ export function GameManager({ children }: GameManagerProps) {
   });
 
   const { flagState, flagCount } = flagStateAndCount;
+
+  const { centerView } = useControls();
 
   useEffect(() => {
     if (mineWasHit) {
@@ -127,6 +130,14 @@ export function GameManager({ children }: GameManagerProps) {
     },
     [setConfigState, setRevelationState, setMinePositions, setNeighborCounts],
   );
+
+  useEffect(
+    () => {
+      centerView(undefined, 0);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [configState],
+  )
 
   return (
     <Provider value={{...configState, minePositions, initializeGameConfig, revealedCells: revalationState.revealedCells, revealCell, neighborCounts, flagState, flagCount, updateCellFlag, gamePhase }}>

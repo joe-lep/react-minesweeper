@@ -1,3 +1,4 @@
+import { TransformWrapper } from 'react-zoom-pan-pinch';
 import './App.css'
 import { GameManager } from './components/GameManager';
 import Grid from './components/Grid';
@@ -7,14 +8,16 @@ import Toolbar from './components/Toolbar';
 
 function App() {
   return (
-    <GameManager>
-      <div className="app-container">
-        <Header />
-        <StatsSection />
-        <Toolbar />
-        <Grid />
-      </div>
-    </GameManager>
+    <TransformWrapper centerOnInit minScale={0.25}>
+      <GameManager>
+        <div className="app-container">
+          <Header />
+          <StatsSection />
+          <Toolbar />
+          <Grid />
+        </div>
+      </GameManager>
+    </TransformWrapper>
   )
 }
 

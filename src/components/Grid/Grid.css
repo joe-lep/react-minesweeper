@@ -1,13 +1,9 @@
-.grid-container-outer {
+.grid-container {
     grid-area: grid;
     position: relative;
 }
 
-.grid-container {
-    display: flex;
-    justify-content: safe center;
-    align-items: safe center;
-    overflow: auto;
+.grid-container-inner {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -15,11 +11,15 @@
     right: 0;
 }
 
+.grid-transform-wrapper {
+    width: 100% !important;
+    height: 100% !important;
+}
+
 .grid {
     display: inline-flex;
     flex-direction: column;
     border: 2px solid black;
-    zoom: 1;
     margin: 64px;
 }
 
