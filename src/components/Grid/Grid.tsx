@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import Row from "./Row";
 import './Grid.css';
 import { useGameConfig } from "../GameManager";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import { TransformComponent } from "react-zoom-pan-pinch";
 
 export default function Grid() {
   const { width, height } = useGameConfig();
@@ -16,15 +16,13 @@ export default function Grid() {
 
   return (
     <div className="grid-container">
-        <TransformWrapper centerOnInit minScale={0.25}>
-          <div className="grid-container-inner">
-            <TransformComponent wrapperClass="grid-transform-wrapper">
-              <div className="grid">
-                {renderedRows}
-              </div>
-            </TransformComponent>
+      <div className="grid-container-inner">
+        <TransformComponent wrapperClass="grid-transform-wrapper">
+          <div className="grid">
+            {renderedRows}
           </div>
-        </TransformWrapper>
+        </TransformComponent>
+      </div>
     </div>
   );
 }
