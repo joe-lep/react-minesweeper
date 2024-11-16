@@ -8,7 +8,7 @@ import Toolbar from './components/Toolbar';
 
 function App() {
   return (
-    <TransformWrapper centerOnInit minScale={0.25}>
+    <TransformWrapper centerOnInit minScale={0.25} doubleClick={{ disabled: true }} panning={{ allowLeftClickPan: false, allowRightClickPan: false }}>
       <GameManager>
         <div className="app-container">
           <Header />

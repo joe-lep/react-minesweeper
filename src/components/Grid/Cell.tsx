@@ -9,23 +9,21 @@ interface CellProps {
 }
 
 export default function Cell({ rowIndex, columnIndex }: CellProps) {
-  const { isRevealed, revealCell, hasMine, neighboringMineCount, cellFlag, updateCellFlag } = useCellContext(rowIndex, columnIndex);
+  const { isRevealed, hasMine, neighboringMineCount, cellFlag, handleCellClick } = useCellContext(rowIndex, columnIndex);
 
   const handleClick = useCallback(
     () => {
-      if (!isRevealed) {
-        revealCell(rowIndex, columnIndex);
-      }
+      handleCellClick();
     },
-    [rowIndex, columnIndex, revealCell, isRevealed],
+    [handleCellClick],
   );
 
   const handleContextMenu = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
       event.preventDefault();
-      updateCellFlag(rowIndex, columnIndex, (cellFlag + 1) % 3);
+      handleCellClick(true);
     },
-    [updateCellFlag, rowIndex, columnIndex, cellFlag],
+    [handleCellClick],
   );
   
 

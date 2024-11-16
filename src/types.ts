@@ -1,3 +1,5 @@
+import { DIG_MODE, FLAG_MODE } from "./config/action-modes";
+
 export type GameConfig = {
   width: number;
   height: number;
@@ -27,3 +29,5 @@ export type StopWatchApi = {
   pause: () => void;
   reset: () => void;
 }
+
+export type ActionMode = typeof DIG_MODE | typeof FLAG_MODE

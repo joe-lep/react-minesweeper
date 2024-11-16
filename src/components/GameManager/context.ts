@@ -1,7 +1,8 @@
 import { createContext } from "react";
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from "../../config/values";
-import { GameConfig } from "../../types";
+import { ActionMode, GameConfig } from "../../types";
 import { GAME_READY } from "../../config/game-phases";
+import { DIG_MODE } from "../../config/action-modes";
 
 interface GameContext {
   width: number
@@ -16,6 +17,8 @@ interface GameContext {
   flagCount: number
   updateCellFlag: (row: number, column: number, newFlagValue: number) => void
   gamePhase: string
+  actionMode: ActionMode
+  setActionMode: (newActionMode: ActionMode) => void
 }
 
 const gameContext = createContext<GameContext>({
@@ -31,6 +34,8 @@ const gameContext = createContext<GameContext>({
   flagCount: 0,
   updateCellFlag: () => {},
   gamePhase: GAME_READY,
+  actionMode: DIG_MODE,
+  setActionMode: () => {},
 });
 
 export default gameContext;
