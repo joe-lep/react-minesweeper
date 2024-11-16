@@ -5,3 +5,17 @@
 .header-container h1 {
     font-size: 32px;
 }
+
+.header-small {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .header-regular {
+        display: none;
+    }
+
+    .header-small {
+        display: block;
+    }
+}

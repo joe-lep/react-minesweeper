@@ -11,3 +11,14 @@
   left: 0;
   right: 0;
 }
+
+@media (max-width: 640px) {
+  .app-container {
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "header stats"
+      "grid grid"
+      "toolbar toolbar";
+  }
+}
