@@ -1,3 +1,5 @@
+import MineVector from '../../assets/mine.svg?react';
+
 interface CellContentProps {
   hasMine: boolean
   neighboringMineCount: number
@@ -5,6 +7,6 @@ interface CellContentProps {
 
 export default function CellContent({ hasMine, neighboringMineCount }: CellContentProps) {
   return (
-    <div className="cell-content">{hasMine ? 'M' : neighboringMineCount}</div>
+    <div className="cell-content">{hasMine ? (<MineVector />) : neighboringMineCount}</div>
   );
 }
