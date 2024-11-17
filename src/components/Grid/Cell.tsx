@@ -3,6 +3,8 @@ import { useCellContext, useGamePhase } from "../GameManager";
 import clsx from "clsx";
 import { GAME_READY } from "../../config/game-phases";
 import MineVector from '../../assets/mine.svg?react';
+import FlagVector from '../../assets/flag.svg?react';
+import { QUESTION_FLAG, YES_FLAG } from "../../config/flags";
 
 interface CellProps {
   rowIndex: number
@@ -42,8 +44,12 @@ export default function Cell({ rowIndex, columnIndex }: CellProps) {
         return neighboringMineCount || null;
       }
 
-      if (cellFlag) {
-        return 'F';
+      if (cellFlag === YES_FLAG) {
+        return (<FlagVector />);
+      }
+
+      if (cellFlag === QUESTION_FLAG) {
+        return '?';
       }
 
       return null;
