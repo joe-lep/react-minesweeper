@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { ReactNode } from "react";
-import './Modal.css';
+import './Modal.scss';
 
 export interface ModalProps {
   open: boolean

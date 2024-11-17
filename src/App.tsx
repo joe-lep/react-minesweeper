@@ -1,5 +1,5 @@
 import { TransformWrapper } from 'react-zoom-pan-pinch';
-import './App.css'
+import './App.scss'
 import { GameManager } from './components/GameManager';
 import Grid from './components/Grid';
 import Header from './components/Header';

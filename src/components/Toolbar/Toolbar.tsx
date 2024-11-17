@@ -1,6 +1,6 @@
 import ActionModeSwitch from '../ActionModeSwitch';
 import GameStartModal from '../GameStartModal';
-import './Toolbar.css'
+import './Toolbar.scss'
 
 export default function Toolbar() {
   return (

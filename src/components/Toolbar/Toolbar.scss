@@ -1,0 +1,15 @@
+.toolbar-container {
+  grid-area: toolbar;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .toolbar-container {
+      flex-direction: row-reverse;
+  }
+  .toolbar-padder {
+      display: none;
+  }
+}
