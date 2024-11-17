@@ -1,27 +1,15 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { GAME_IN_PROGRESS, GAME_LOST, GAME_WON } from "../../config/game-phases";
 import { StopWatchApi } from "../../types";
 import StopWatch from "./StopWatch";
+import StopWatchVector from '../../assets/stopwatch.svg?react';
+import clsx from "clsx";
 
 export interface ElapsedTimeDisplayProps {
   gamePhase: string
 }
 
 export default function ElapsedTimeDisplay({ gamePhase }: ElapsedTimeDisplayProps) {
-  const timeLabelContents = useMemo(
-    () => {
-      if (gamePhase === GAME_WON) {
-        return 'W';
-      }
-      if (gamePhase === GAME_LOST) {
-        return 'L';
-      }
-
-      return 'T';
-    },
-    [gamePhase],
-  );
-
   const stopWatchApi = useRef<StopWatchApi>(null);
 
   useEffect(
@@ -40,11 +28,11 @@ export default function ElapsedTimeDisplay({ gamePhase }: ElapsedTimeDisplayProp
   );
 
   return (
-    <div className="elapsed-time-display">
-      <span className="elapsed-time-display--label">
-        {timeLabelContents}:{' '}
+    <div className={clsx('stat-display', 'elapsed-time-display', { won: gamePhase === GAME_WON, lost: gamePhase === GAME_LOST })}>
+      <span className="stat-label">
+        <StopWatchVector />
       </span>
-      <span className="elapsed-time-display--time">
+      <span className="stat-value">
         <StopWatch apiRef={stopWatchApi} />
       </span>
     </div>

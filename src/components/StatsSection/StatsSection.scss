@@ -3,4 +3,34 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+
+  .stat-display {
+    font-size: 40px;
+    font-weight: 700;
+    color: darkslategray;
+    display: flex;
+    align-items: center;
+    margin: 0 16px;
+
+    .stat-label {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 12px;
+    }
+  
+    .stat-value {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    &.elapsed-time-display {
+      &.won {
+        color: green;
+      }
+
+      &.lost {
+        color: red;
+      }
+    }
+  }
 }

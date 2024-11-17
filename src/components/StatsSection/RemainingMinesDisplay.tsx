@@ -1,3 +1,5 @@
+import MineVector from '../../assets/mine.svg?react';
+
 export interface RemainingMinesDisplayProps {
   mineCount: number
   flagCount: number
@@ -5,9 +7,9 @@ export interface RemainingMinesDisplayProps {
 
 export default function RemainingMinesDisplay({ mineCount, flagCount }: RemainingMinesDisplayProps) {
   return (
-    <div className="remaining-mine-display">
-      <span className="remaining-mine-display--label">M:{' '}</span>
-      <span className="remaining-mine-display--count">{mineCount - flagCount}</span>
+    <div className="stat-display remaining-mine-display">
+      <span className="stat-label"><MineVector /></span>
+      <span className="stat-value">{mineCount - flagCount}</span>
     </div>
   );
 }
