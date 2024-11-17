@@ -45,28 +45,26 @@
     font-weight: 700;
 }
 
-.cell-cover {
+.cell-inner {
     width: 100%;
     height: 100%;
-    background-color: lightgray;
-    border: 8px darkgray outset;
     box-sizing: border-box;
-    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.cell:hover .cell-cover, .cell:focus .cell-cover {
+.cell-inner.covered {
+    background-color: lightgray;
+    border: 8px darkgray outset;
+    cursor: pointer;
+}
+
+.cell:hover .cell-inner.covered, .cell:focus .cell-inner.covered {
     background-color: lightblue;
     border-color: turquoise;
 }
 
-.cell-content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.cell-inner.revealed {
     background: lightgray;
 }
