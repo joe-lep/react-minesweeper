@@ -9,22 +9,24 @@ export interface StopWatchProps {
 export default function StopWatch({ className, apiRef }: StopWatchProps) {
   const [isRunning, setIsRunning] = useState(false);
   const [accumulatedTime, setAccumulatedTime] = useState(0);
-  const [startTime, setStartTime] = useState(0);
+  //const [startTime, setStartTime] = useState(0);
   const animationFrameRef = useRef(0);
   const elRef = useRef<HTMLSpanElement>(null);
 
+  const startTimeRef = useRef(0);
+
   const getTime = useCallback(
     () => {
-      return accumulatedTime + (isRunning ? (Date.now() - startTime) : 0)
+      return accumulatedTime + (isRunning ? (Date.now() - startTimeRef.current) : 0)
     },
-    [isRunning, accumulatedTime, startTime],
+    [isRunning, accumulatedTime, startTimeRef],
   );
 
   const setTime = useCallback(
     (time: number) => {
-      setAccumulatedTime(time - (isRunning ? (Date.now() - startTime) : 0));
+      setAccumulatedTime(time - (isRunning ? (Date.now() - startTimeRef.current) : 0));
     },
-    [isRunning, startTime, setAccumulatedTime],
+    [isRunning, startTimeRef, setAccumulatedTime],
   );
 
   const getFormattedTime = useCallback(
@@ -52,27 +54,28 @@ export default function StopWatch({ className, apiRef }: StopWatchProps) {
   const start = useCallback(
     () => {
       setIsRunning(true);
-      setStartTime(Date.now());
+      startTimeRef.current = Date.now();
     },
-    [setIsRunning, setStartTime],
+    [setIsRunning, startTimeRef],
   );
 
   const pause = useCallback(
     () => {
       if (isRunning) {
         setIsRunning(false);
-        setAccumulatedTime(prevState => Date.now() - startTime + prevState);
+        setAccumulatedTime(prevState => Date.now() - startTimeRef.current + prevState);
       }
     },
-    [isRunning, setIsRunning, setAccumulatedTime, startTime],
+    [isRunning, setIsRunning, setAccumulatedTime, startTimeRef],
   );
   
   const reset = useCallback(
     () => {
+      console.log('resetting');
       setAccumulatedTime(0);
-      setStartTime(Date.now());
+      startTimeRef.current = Date.now();
     },
-    [setStartTime, setAccumulatedTime],
+    [startTimeRef, setAccumulatedTime],
   );
 
   const stopWatchApi: StopWatchApi = useMemo(

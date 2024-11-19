@@ -7,16 +7,16 @@ import clsx from "clsx";
 
 export interface ElapsedTimeDisplayProps {
   gamePhase: string
+  minePositions: unknown // type doesn't matter, we're just checking for changes
 }
 
-export default function ElapsedTimeDisplay({ gamePhase }: ElapsedTimeDisplayProps) {
+export default function ElapsedTimeDisplay({ gamePhase, minePositions }: ElapsedTimeDisplayProps) {
   const stopWatchApi = useRef<StopWatchApi>(null);
 
   useEffect(
     () => {
       if (stopWatchApi.current) {
         if (gamePhase === GAME_IN_PROGRESS) {
-          stopWatchApi.current.reset();
           stopWatchApi.current.start();
         }
         else {
@@ -25,6 +25,15 @@ export default function ElapsedTimeDisplay({ gamePhase }: ElapsedTimeDisplayProp
       }
     },
     [stopWatchApi, gamePhase]
+  );
+
+  // reset timer if new game board has been rolled
+  useEffect(
+    () => {
+      console.log('reset');
+      stopWatchApi.current?.reset();
+    },
+    [minePositions, stopWatchApi],
   );
 
   return (

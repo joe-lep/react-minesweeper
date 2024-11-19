@@ -59,3 +59,5 @@ export const useFlagModeState = () => {
   const { isFlagMode, setIsFlagMode } = useContext(gameContext);
   return useMemo(() => ({ isFlagMode, setIsFlagMode }), [isFlagMode, setIsFlagMode ]);
 }
+
+export const useMinePositions = () => useContext(gameContext).minePositions;
