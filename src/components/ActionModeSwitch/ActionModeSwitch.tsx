@@ -3,7 +3,7 @@ import { useFlagModeState } from "../GameManager";
 import clsx from "clsx";
 import PickaxeMonochromeVector from '../../assets/pickaxe-monochrome.svg?react';
 import FlagMonochromeVector from '../../assets/flag-monochrome.svg?react';
-import './ActionModeSwitch.scss';
+import CapsuleControl from "../CapsuleControl";
 
 export default function ActionModeSwitch() {
   const { isFlagMode, setIsFlagMode } = useFlagModeState();
@@ -16,12 +16,10 @@ export default function ActionModeSwitch() {
   );
 
   return (
-    <div className="flag-mode-toggle-touch-highlight-container">
-      <label className={clsx('flag-mode-toggle', { 'is-flag-mode': isFlagMode })}>
-        <input type="checkbox" checked={isFlagMode} onChange={handleChange} />
-        <span className="dig-mode-side"><PickaxeMonochromeVector /></span>
-        <span className="flag-mode-side"><FlagMonochromeVector /></span>
-      </label>
-    </div>
+    <CapsuleControl Component="label">
+      <input type="checkbox" checked={isFlagMode} onChange={handleChange} />
+      <span className={clsx({ active: !isFlagMode })}><PickaxeMonochromeVector /></span>
+      <span className={clsx({ active: isFlagMode })}><FlagMonochromeVector /></span>
+    </CapsuleControl>
   );
 }

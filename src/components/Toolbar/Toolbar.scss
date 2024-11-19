@@ -3,6 +3,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 16px;
+
+  .action-button {
+    background: blue;
+    color: white;
+    min-width: 132px;
+    min-height: 48px;
+  }
+
+  > :not(:last-child) {
+    margin-right: 16px;
+
+    @media (max-width: 1080px) {
+      margin-right: 8px;
+    }
+  }
 }
 
 @media (max-width: 640px) {

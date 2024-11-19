@@ -10,7 +10,34 @@
     color: darkslategray;
     display: flex;
     align-items: center;
-    margin: 0 16px;
+
+    &.elapsed-time-display {
+      .stat-value {
+        min-width: 140px;
+
+        @media (max-width: 1080px) {
+          min-width: 100px;
+        }
+
+        @media (max-width: 640px) or (max-height: 640px) {
+          min-width: 80px;
+        }
+      }
+    }
+
+    &.remaining-mine-display {
+      .stat-value {
+        min-width: 100px;
+
+        @media (max-width: 1080px) {
+          min-width: 70px;
+        }
+
+        @media (max-width: 640px) or (max-height: 640px) {
+          min-width: 60px;
+        }
+      }
+    }
 
     .stat-label {
       display: inline-flex;
@@ -30,6 +57,36 @@
 
       &.lost {
         color: red;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-right: 16px;
+
+      @media (max-width: 1080px) {
+        margin-right: 8px;
+      }
+    }
+
+    @media (max-width: 1080px) {
+      font-size: 28px;
+
+      .stat-label {
+        margin-right: 4px;
+      }
+
+      svg {
+        width: 42px;
+        height: 42px;
+      }
+    }
+
+    @media (max-width: 640px) or (max-height: 640px) {
+      font-size: 24px;
+
+      svg {
+        width: 32px;
+        height: 32px;
       }
     }
   }

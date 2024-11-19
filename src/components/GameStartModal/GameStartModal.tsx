@@ -93,7 +93,7 @@ export default function GameStartModal() {
 
   return (
     <>
-      <button type="button" onClick={handleOpenClick}>Start Game</button>
+      <button type="button" onClick={handleOpenClick} className="action-button">New Game</button>
       <Modal open={open || !mineCount}>
         <h2 className="modal-header">New Game</h2>
         <div className="modal-body">

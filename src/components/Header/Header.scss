@@ -1,21 +1,35 @@
 .header-container {
   grid-area: header;
+  padding: 16px;
 
   h1 {
     font-size: 32px;
-  }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 
-  .header-small {
-    display: none;
-  }
+    svg {
+      width: 64px;
+      height: 64px;
 
-  @media (max-width: 640px) {
-    .header-regular {
-        display: none;
+      @media (max-width: 1080px) {
+        width: 40px;
+        height: 40px;
+      }
+
+      @media (max-width: 640px) or (max-height: 640px) {
+        width: 32px;
+        height: 32px;
+      }
     }
-  
-    .header-small {
-        display: block;
+
+    .header-text {
+      margin-left: 24px;
+
+      @media (max-width: 1440px) {
+        display: none;
+      }
     }
   }
 }

@@ -1,0 +1,64 @@
+.capsule-control-wrapper {
+  border-radius: 999px;
+  overflow: hidden;
+
+  .capsule-control {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 999px;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+
+    & > :not(input) {
+      padding: 16px 24px 12px;
+      background: white;
+      color: gray;
+
+      @media(max-width: 1080px) {
+        padding: 12px 18px 8px;
+      }
+    }
+
+    & > :not(input):first-of-type {
+      padding-left: 32px;
+
+      @media(max-width: 1080px) {
+        padding-left: 24px
+      }
+    }
+
+    & > :not(input):last-of-type {
+      padding-right: 32px;
+
+      @media(max-width: 1080px) {
+        padding-right: 24px
+      }
+    }
+
+    & > .active {
+      background: blue;
+      color :white;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+
+      @media (max-width: 1080px) {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    & > input {
+      appearance: none;
+      position: absolute;
+      top: -99999px;
+      left: -99999px;
+    }
+  }
+}
