@@ -118,9 +118,9 @@ export default function GameStartModal() {
       <button type="button" onClick={handleOpenClick} className="primary">New Game</button>
       <Modal open={open || !mineCount}>
         <h2 className="modal-header">New Game</h2>
-        <div className="modal-body">
-          <div><p>Difficulty Options:</p></div>
-          <div>
+        <div className="modal-body game-config-modal--body">
+          <div className="difficulty-options-container">
+            <h3>Difficulty Options</h3>
             <CapsuleControl className="difficulty-capsule">
               <DifficultyButton currentConfig={currentConfig} targetConfig={EASY_CONFIG} onClick={handleDifficultyClick}>
                 Easy
@@ -133,25 +133,29 @@ export default function GameStartModal() {
               </DifficultyButton>
             </CapsuleControl>
           </div>
-          <div className="vertical-screen-difficulty">
-            <div><p>For Portrait Screens</p></div>
-            <div>
-              <CapsuleControl className="difficulty-capsule">
-              <DifficultyButton currentConfig={currentConfig} targetConfig={MOBILE_EASY_CONFIG} onClick={handleDifficultyClick}>
-                  Easy
-                </DifficultyButton>
-                <DifficultyButton currentConfig={currentConfig} targetConfig={MOBILE_MEDIUM_CONFIG} onClick={handleDifficultyClick}>
-                  Medium
-                </DifficultyButton>
-                <DifficultyButton currentConfig={currentConfig} targetConfig={MOBILE_HARD_CONFIG} onClick={handleDifficultyClick}>
-                  Hard
-                </DifficultyButton>
-              </CapsuleControl>
-            </div>
+          <div className="difficulty-options-container vertical-screen-difficulty">
+            <h3>For Portrait Screens</h3>
+            <CapsuleControl className="difficulty-capsule">
+            <DifficultyButton currentConfig={currentConfig} targetConfig={MOBILE_EASY_CONFIG} onClick={handleDifficultyClick}>
+                Easy
+              </DifficultyButton>
+              <DifficultyButton currentConfig={currentConfig} targetConfig={MOBILE_MEDIUM_CONFIG} onClick={handleDifficultyClick}>
+                Medium
+              </DifficultyButton>
+              <DifficultyButton currentConfig={currentConfig} targetConfig={MOBILE_HARD_CONFIG} onClick={handleDifficultyClick}>
+                Hard
+              </DifficultyButton>
+            </CapsuleControl>
           </div>
-          <div><label>Width: <input type="number" min={4} value={newWidth} onChange={handleWidthChange} /></label></div>
-          <div><label>Height: <input type="number" min={4} value={newHeight} onChange={handleHeightChange} /></label></div>
-          <div><label>Mines: <input type="number" min={1} value={newMineCount} onChange={handleMineCountChange} /></label></div>
+
+          <div className="game-config-inputs">
+            <label htmlFor="game-config--width">Grid Width</label>
+            <input id="game-config--width" type="number" min={4} value={newWidth} onChange={handleWidthChange} />
+            <label htmlFor="game-config--height">Grid Height</label>
+            <input id="game-config--height" type="number" min={4} value={newHeight} onChange={handleHeightChange} />
+            <label htmlFor="game-config--mines"># of Mines</label>
+            <input id="game-config--mines" type="number" min={1} value={newMineCount} onChange={handleMineCountChange} />
+          </div>
           {errorMessage && (
             <div className="error-message">{errorMessage}</div>
           )}
