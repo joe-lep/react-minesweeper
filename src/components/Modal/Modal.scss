@@ -10,8 +10,8 @@
 
   &.open {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: safe center;
+    align-items: safe center;
   }
 }
 
@@ -20,11 +20,16 @@
   width: 640px;
   min-height: 480px;
   max-width: calc(100vw - 64px);
-  max-height: calc(100vh - 32px);
+  max-height: calc(100vh - 96px);
   display: flex;
   flex-direction: column;
   padding: 16px;
   border: 1px solid black;
+  overflow: auto;
+
+  @media (max-height: 544px) {
+    min-height: 0;
+  }
 
   .modal-header {
     flex-grow: 0;

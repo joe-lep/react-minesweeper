@@ -1,0 +1,25 @@
+.difficulty-capsule {
+  button {
+    flex-grow: 1;
+    border-radius: 0;
+
+    &:not(:last-child) {
+      border-right: 1px solid gray;
+    }
+  }
+}
+
+.vertical-screen-difficulty {
+  display: none;
+
+  @media (orientation: portrait) {
+    display: block;
+  }
+}
+
+.game-start-modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px
+}
