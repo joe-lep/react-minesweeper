@@ -1,29 +1,27 @@
 import { ChangeEvent, useCallback } from "react";
-import { DIG_MODE, FLAG_MODE } from "../../config/action-modes";
-import { useActionModeState } from "../GameManager";
+import { useFlagModeState } from "../GameManager";
+import clsx from "clsx";
+import PickaxeMonochromeVector from '../../assets/pickaxe-monochrome.svg?react';
+import FlagMonochromeVector from '../../assets/flag-monochrome.svg?react';
+import './ActionModeSwitch.scss';
 
 export default function ActionModeSwitch() {
-  const { actionMode, setActionMode } = useActionModeState();
+  const { isFlagMode, setIsFlagMode } = useFlagModeState();
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      switch (event.target.value) {
-        case DIG_MODE:
-          setActionMode(DIG_MODE);
-          return;
-        case FLAG_MODE:
-          setActionMode(FLAG_MODE);
-          return;
-      }
+      setIsFlagMode(event.target.checked);
     },
-    [setActionMode],
+    [setIsFlagMode],
   );
-  
 
   return (
-    <div className="action-mode-switch">
-      <label><input type="radio" name="action-mode" value={DIG_MODE} checked={actionMode === DIG_MODE} onChange={handleChange} />Dig</label>
-      <label><input type="radio" name="action-mode" value={FLAG_MODE} checked={actionMode === FLAG_MODE} onChange={handleChange} />Flag</label>
+    <div className="flag-mode-toggle-touch-highlight-container">
+      <label className={clsx('flag-mode-toggle', { 'is-flag-mode': isFlagMode })}>
+        <input type="checkbox" checked={isFlagMode} onChange={handleChange} />
+        <span className="dig-mode-side"><PickaxeMonochromeVector /></span>
+        <span className="flag-mode-side"><FlagMonochromeVector /></span>
+      </label>
     </div>
   );
 }

@@ -1,0 +1,64 @@
+.flag-mode-toggle {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 999px;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+
+  & > span {
+    padding: 12px 24px;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  input {
+    appearance: none;
+    position: absolute; //prevent disruption to flex layout
+  }
+
+  .flag-mode-capsule {
+    border-radius: 999px;
+    overflow: hidden;
+    display: flex;
+    border: 1px solid black;
+
+    & > * {
+      padding: 12px 24px;
+    }
+  }
+
+  .dig-mode-side {
+    background: blue;
+    color: white;
+  }
+
+  .flag-mode-side {
+    background: white;
+    color: gray;
+  }
+
+  &.is-flag-mode {
+    .dig-mode-side {
+      background: white;
+      color: gray;
+    }
+
+    .flag-mode-side {
+      background: blue;
+      color :white;
+    }
+  }
+}
+
+// prevent touch highlight from appearing as a rectangle over the capsule
+.flag-mode-toggle-touch-highlight-container {
+  border-radius: 999px;
+  overflow: hidden;
+}
