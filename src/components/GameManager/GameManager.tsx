@@ -49,6 +49,20 @@ export function GameManager({ children }: GameManagerProps) {
     }
   }, [mineWasHit, revalationState, configState]);
 
+  const updateCellFlag = useCallback(
+    (row: number, column: number, newFlagValue: number) => {
+      setFlagStateAndCount((prevState) => {
+        const newFlagState = [...prevState.flagState];
+        const rowIndex = row * configState.width + column;
+        newFlagState[rowIndex] = newFlagValue;
+        const newFlagCount = prevState.flagCount - (prevState.flagState[rowIndex] === YES_FLAG ? 1 : 0) + (newFlagValue === YES_FLAG ? 1 : 0);
+
+        return { flagState: newFlagState, flagCount: newFlagCount};
+      });
+    },
+    [setFlagStateAndCount, configState],
+  );
+
   const executeRevealCell = useCallback(
     (row: number, column: number) => {
       const cellIndex = row * configState.width + column;
@@ -71,8 +85,10 @@ export function GameManager({ children }: GameManagerProps) {
       if (minePositions[cellIndex]) {
         setMineWasHit(true);
       }
+
+      updateCellFlag(row, column, NO_FLAG);
     },
-    [setRevelationState, configState, minePositions, setMineWasHit],
+    [setRevelationState, configState, minePositions, setMineWasHit, updateCellFlag],
   );
 
   const revealCell = useCallback(
@@ -98,21 +114,6 @@ export function GameManager({ children }: GameManagerProps) {
       }
     },
     [gamePhase, executeRevealCell, minePositions, neighborCounts, configState],
-  );
-  
-
-  const updateCellFlag = useCallback(
-    (row: number, column: number, newFlagValue: number) => {
-      setFlagStateAndCount((prevState) => {
-        const newFlagState = [...prevState.flagState];
-        const rowIndex = row * configState.width + column;
-        newFlagState[rowIndex] = newFlagValue;
-        const newFlagCount = prevState.flagCount - (prevState.flagState[rowIndex] === YES_FLAG ? 1 : 0) + (newFlagValue === YES_FLAG ? 1 : 0);
-
-        return { flagState: newFlagState, flagCount: newFlagCount};
-      });
-    },
-    [setFlagStateAndCount, configState],
   );
 
   const initializeGameConfig = useCallback(
