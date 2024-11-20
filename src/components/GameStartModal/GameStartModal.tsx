@@ -6,6 +6,7 @@ import CapsuleControl from "../CapsuleControl";
 import './GameStartModal.scss';
 import DifficultyButton from "./DifficultyButton";
 import { GameConfig } from "../../types";
+import InstructionsToggle from "./InstructionsToggle";
 
 function testInt(value: number, minimum?: number) {
   if (Number.isInteger(value)) {
@@ -20,6 +21,7 @@ export default function GameStartModal() {
   const initializeGameConfig = useInitializeGameConfig();
   const [newWidth, setNewWidth] = useState(String(width));
   const [newHeight, setNewHeight] = useState(String(height));
+  const [instructionsOpen, setInstructionsOpen] = useState(false);
   const [newMineCount, setNewMineCount] = useState(String(mineCount || DEFAULT_MINE_COUNT));
   const [open, setOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -30,6 +32,7 @@ export default function GameStartModal() {
       setNewHeight(String(height));
       setNewMineCount(String(mineCount || DEFAULT_MINE_COUNT));
       setErrorMessage('');
+      setInstructionsOpen(false);
       setOpen(true);
     },
     [width, height, mineCount, setNewWidth, setNewHeight, setNewMineCount, setOpen, setErrorMessage],
@@ -156,9 +159,12 @@ export default function GameStartModal() {
             <label htmlFor="game-config--mines"># of Mines</label>
             <input id="game-config--mines" type="number" min={1} value={newMineCount} onChange={handleMineCountChange} />
           </div>
+
           {errorMessage && (
             <div className="error-message">{errorMessage}</div>
           )}
+
+          <InstructionsToggle open={instructionsOpen} setOpen={setInstructionsOpen} />
         </div>
         <div className="modal-footer game-start-modal-buttons">
           <button type="button" onClick={handleCloseClick} disabled={!mineCount}>Cancel</button>
