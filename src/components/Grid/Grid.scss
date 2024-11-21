@@ -1,6 +1,7 @@
 .grid-container {
   grid-area: grid;
   position: relative;
+  box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.25) inset;
 }
 
 .grid-container-inner {
