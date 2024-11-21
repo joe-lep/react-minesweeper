@@ -1,7 +1,7 @@
 import { MouseEvent, useCallback, useMemo } from "react";
 import { useCellContext, useGamePhase } from "../GameManager";
 import clsx from "clsx";
-import { GAME_READY } from "../../config/game-phases";
+import { GAME_LOST, GAME_READY, GAME_WON } from "../../config/game-phases";
 import MineVector from '../../assets/mine.svg?react';
 import FlagVector from '../../assets/flag.svg?react';
 import { QUESTION_FLAG, YES_FLAG } from "../../config/flags";
@@ -70,7 +70,17 @@ export default function Cell({ rowIndex, columnIndex }: CellProps) {
   
   return (
     <span className="cell" tabIndex={0} onClick={handleClick} onContextMenu={handleContextMenu}>
-      <span className={clsx('cell-inner', isRevealed ? 'revealed' : 'covered', neighborCountClassName)}>{cellContent}</span>
+      <span
+        className={clsx(
+          'cell-inner',
+          isRevealed ? 'revealed' : 'covered',
+          neighborCountClassName,
+          {
+            winner: gamePhase === GAME_WON && hasMine,
+            loser: gamePhase === GAME_LOST && hasMine,
+          },
+        )}
+      >{cellContent}</span>
     </span>
   );
 }

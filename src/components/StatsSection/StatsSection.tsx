@@ -12,7 +12,7 @@ export default function StatsSection() {
   return (
     <div className="stats-container">
       <ElapsedTimeDisplay gamePhase={gamePhase} minePositions={minePositions} />
-      <RemainingMinesDisplay mineCount={mineCount} flagCount={flagCount} />
+      <RemainingMinesDisplay gamePhase={gamePhase} mineCount={mineCount} flagCount={flagCount} />
     </div>
   );
 }

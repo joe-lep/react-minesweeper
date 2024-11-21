@@ -64,10 +64,24 @@
         border: 8px darkgray outset;
         cursor: pointer;
         font-size: 36px;
+
+        &.winner {
+          background-color: #a0e980;
+          border-color: #77c33d;
+        }
+
+        &.loser {
+          background-color: #fbb9b9;
+          border-color: #e37070;
+        }
       }
 
       &.revealed {
         background: lightgray;
+
+        &.loser {
+          background-color: #ff6363;
+        }
       }
 
       &.neighboring-mine-count--1 {
