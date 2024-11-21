@@ -46,8 +46,10 @@
     height: 64px;
     width: 64px;
     border: 1px solid black;
-    font-size: 32px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 42px;
     font-weight: 700;
+    -webkit-text-stroke: 1px rgb(48, 51, 59);
 
     .cell-inner {
       width: 100%;
@@ -65,6 +67,38 @@
 
       &.revealed {
         background: lightgray;
+      }
+
+      &.neighboring-mine-count--1 {
+        color: rgb(9, 162, 223);
+      }
+
+      &.neighboring-mine-count--2 {
+        color: rgb(11, 189, 11);
+      }
+
+      &.neighboring-mine-count--3 {
+        color: gold;
+      }
+
+      &.neighboring-mine-count--4 {
+        color: rgb(255, 127, 0);
+      }
+
+      &.neighboring-mine-count--5 {
+        color: red;
+      }
+
+      &.neighboring-mine-count--6 {
+        color: purple;
+      }
+
+      &.neighboring-mine-count--7 {
+        color: magenta;
+      }
+
+      &.neighboring-mine-count--8 {
+        color: rgb(25, 3, 126);
       }
     }
   }

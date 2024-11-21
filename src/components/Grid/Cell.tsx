@@ -56,11 +56,21 @@ export default function Cell({ rowIndex, columnIndex }: CellProps) {
     },
     [gamePhase, isRevealed, hasMine, cellFlag, neighboringMineCount],
   );
-  
 
+  const neighborCountClassName = useMemo(
+    () => {
+      if (!isRevealed || hasMine) {
+        return '';
+      }
+
+      return `neighboring-mine-count--${neighboringMineCount}`;
+    },
+    [hasMine, isRevealed, neighboringMineCount],
+  );
+  
   return (
     <span className="cell" tabIndex={0} onClick={handleClick} onContextMenu={handleContextMenu}>
-      <span className={clsx('cell-inner', isRevealed ? 'revealed' : 'covered')}>{cellContent}</span>
+      <span className={clsx('cell-inner', isRevealed ? 'revealed' : 'covered', neighborCountClassName)}>{cellContent}</span>
     </span>
   );
 }
