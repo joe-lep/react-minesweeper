@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Sono:wght@700&display=swap');
+
 .grid-container {
   grid-area: grid;
   position: relative;
@@ -46,8 +48,8 @@
     height: 64px;
     width: 64px;
     border: 1px solid #3f3f43;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 42px;
+    font-family: Sono, "Courier New", monospace;
+    font-size: 52px;
     font-weight: 700;
     -webkit-text-stroke: 1px rgb(48, 51, 59);
 
@@ -63,7 +65,7 @@
         background-color: lightgray;
         border: 8px darkgray outset;
         cursor: pointer;
-        font-size: 36px;
+        font-size: 40px;
 
         &.winner {
           background-color: #a0e980;
