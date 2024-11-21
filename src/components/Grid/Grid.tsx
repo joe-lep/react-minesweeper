@@ -26,6 +26,7 @@ export default function Grid() {
           </div>
         </TransformComponent>
       </div>
+      <div className="inset-shadow-caster" />
     </div>
   );
 }
