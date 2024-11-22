@@ -1,10 +1,11 @@
 import { TransformWrapper } from 'react-zoom-pan-pinch';
-import './App.scss'
-import { GameManager } from './components/GameManager';
-import Grid from './components/Grid';
-import Header from './components/Header';
-import StatsSection from './components/StatsSection';
-import Toolbar from './components/Toolbar';
+
+import './App.scss';
+import { GameManager } from '@/components/GameManager';
+import Grid from '@/components/Grid';
+import Header from '@/components/Header';
+import StatsSection from '@/components/StatsSection';
+import Toolbar from '@/components/Toolbar';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         </div>
       </GameManager>
     </TransformWrapper>
-  )
+  );
 }
 
-export default App
+export default App;

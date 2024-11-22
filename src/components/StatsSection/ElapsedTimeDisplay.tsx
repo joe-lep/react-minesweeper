@@ -1,13 +1,15 @@
-import { useEffect, useRef } from "react";
-import { GAME_IN_PROGRESS, GAME_LOST, GAME_WON } from "../../config/game-phases";
-import { StopWatchApi } from "../../types";
-import StopWatch from "./StopWatch";
-import StopWatchVector from '../../assets/stopwatch.svg?react';
-import clsx from "clsx";
+import { useEffect, useRef } from 'react';
+import clsx from 'clsx';
+
+import { GAME_IN_PROGRESS, GAME_LOST, GAME_WON } from '@/config/game-phases';
+import StopWatch from './StopWatch';
+import { StopWatchApi } from '@/types';
+
+import StopWatchVector from '@/assets/stopwatch.svg?react';
 
 export interface ElapsedTimeDisplayProps {
-  gamePhase: string
-  minePositions: unknown // type doesn't matter, we're just checking for changes
+  gamePhase: string;
+  minePositions: unknown; // type doesn't matter, we're just checking for changes
 }
 
 export default function ElapsedTimeDisplay({ gamePhase, minePositions }: ElapsedTimeDisplayProps) {
@@ -24,13 +26,12 @@ export default function ElapsedTimeDisplay({ gamePhase, minePositions }: Elapsed
         }
       }
     },
-    [stopWatchApi, gamePhase]
+    [stopWatchApi, gamePhase],
   );
 
   // reset timer if new game board has been rolled
   useEffect(
     () => {
-      console.log('reset');
       stopWatchApi.current?.reset();
     },
     [minePositions, stopWatchApi],

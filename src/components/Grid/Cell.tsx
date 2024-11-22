@@ -1,14 +1,16 @@
-import { MouseEvent, useCallback, useMemo } from "react";
-import { useCellContext, useGamePhase } from "../GameManager";
-import clsx from "clsx";
-import { GAME_LOST, GAME_READY, GAME_WON } from "../../config/game-phases";
-import MineVector from '../../assets/mine.svg?react';
-import FlagVector from '../../assets/flag.svg?react';
-import { QUESTION_FLAG, YES_FLAG } from "../../config/flags";
+import { MouseEvent, useCallback, useMemo } from 'react';
+import clsx from 'clsx';
+
+import { GAME_LOST, GAME_READY, GAME_WON } from '@/config/game-phases';
+import { QUESTION_FLAG, YES_FLAG } from '@/config/flags';
+import { useCellContext, useGamePhase } from '@/components/GameManager';
+
+import FlagVector from '@/assets/flag.svg?react';
+import MineVector from '@/assets/mine.svg?react';
 
 interface CellProps {
-  rowIndex: number
-  columnIndex: number
+  rowIndex: number;
+  columnIndex: number;
 }
 
 export default function Cell({ rowIndex, columnIndex }: CellProps) {
@@ -38,7 +40,7 @@ export default function Cell({ rowIndex, columnIndex }: CellProps) {
 
       if (isRevealed) {
         if (hasMine) {
-          return (<MineVector />)
+          return (<MineVector />);
         }
 
         return neighboringMineCount || null;
@@ -67,7 +69,7 @@ export default function Cell({ rowIndex, columnIndex }: CellProps) {
     },
     [hasMine, isRevealed, neighboringMineCount],
   );
-  
+
   return (
     <span className="cell" tabIndex={0} onClick={handleClick} onContextMenu={handleContextMenu}>
       <span
@@ -80,7 +82,9 @@ export default function Cell({ rowIndex, columnIndex }: CellProps) {
             loser: gamePhase === GAME_LOST && hasMine,
           },
         )}
-      >{cellContent}</span>
+      >
+        {cellContent}
+      </span>
     </span>
   );
 }

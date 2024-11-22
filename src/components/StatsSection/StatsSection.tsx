@@ -1,7 +1,7 @@
-import { useFlagCount, useGameConfig, useGamePhase, useMinePositions } from '../GameManager';
+import './StatsSection.scss';
+import { useFlagCount, useGameConfig, useGamePhase, useMinePositions } from '@/components/GameManager';
 import ElapsedTimeDisplay from './ElapsedTimeDisplay';
 import RemainingMinesDisplay from './RemainingMinesDisplay';
-import './StatsSection.scss';
 
 export default function StatsSection() {
   const { mineCount } = useGameConfig();

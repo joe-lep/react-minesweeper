@@ -1,11 +1,12 @@
-import clsx from "clsx";
-import { ReactNode } from "react";
+import clsx from 'clsx';
+import { ReactNode } from 'react';
+
 import './Modal.scss';
 
 export interface ModalProps {
-  open: boolean
-  children: ReactNode
-  className?: string
+  open: boolean;
+  children: ReactNode;
+  className?: string;
 }
 
 export default function Modal({ open, children, className }: ModalProps) {

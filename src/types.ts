@@ -1,4 +1,4 @@
-import { DIG_MODE, FLAG_MODE } from "./config/action-modes";
+import { DIG_MODE, FLAG_MODE } from './config/action-modes';
 
 export type GameConfig = {
   width: number;
@@ -14,12 +14,12 @@ export type CellPosition = {
 export type RevelationState = {
   revealedCells: Array<boolean>;
   coveredCellCount: number;
-}
+};
 
 export type FlagStateAndCount = {
   flagState: Array<number>;
   flagCount: number;
-}
+};
 
 export type StopWatchApi = {
   getTime: () => number;
@@ -28,6 +28,6 @@ export type StopWatchApi = {
   start: () => void;
   pause: () => void;
   reset: () => void;
-}
+};
 
-export type ActionMode = typeof DIG_MODE | typeof FLAG_MODE
+export type ActionMode = typeof DIG_MODE | typeof FLAG_MODE;

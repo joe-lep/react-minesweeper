@@ -1,20 +1,43 @@
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
-import { useGameConfig, useInitializeGameConfig } from "../GameManager";
-import Modal from "../Modal";
-import { DEFAULT_MINE_COUNT, EASY_CONFIG, HARD_CONFIG, MEDIUM_CONFIG, MOBILE_EASY_CONFIG, MOBILE_HARD_CONFIG, MOBILE_MEDIUM_CONFIG } from "../../config/values";
-import CapsuleControl from "../CapsuleControl";
-import './GameStartModal.scss';
-import DifficultyButton from "./DifficultyButton";
-import { GameConfig } from "../../types";
-import InstructionsToggle from "./InstructionsToggle";
+import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 
-function testInt(value: number, minimum?: number) {
-  if (Number.isInteger(value)) {
-    return minimum != null ? value >= minimum : true;
+import './GameStartModal.scss';
+import { useGameConfig, useInitializeGameConfig } from '@/components/GameManager';
+import CapsuleControl from '@/components/CapsuleControl';
+import DifficultyButton from './DifficultyButton';
+import { GameConfig } from '@/types';
+import InstructionsToggle from './InstructionsToggle';
+import Modal from '@/components/Modal';
+
+import {
+  DEFAULT_MINE_COUNT,
+  EASY_CONFIG, HARD_CONFIG,
+  MAX_BOARD_HEIGHT,
+  MAX_BOARD_WIDTH,
+  MAX_MINE_COUNT,
+  MEDIUM_CONFIG,
+  MIN_BOARD_HEIGHT,
+  MIN_BOARD_WIDTH,
+  MIN_MINE_COUNT,
+  MOBILE_EASY_CONFIG,
+  MOBILE_HARD_CONFIG,
+  MOBILE_MEDIUM_CONFIG,
+} from '@/config/values';
+
+function testInt(value: number, minimum?: number, maximum?: number) {
+  if (!Number.isInteger(value)) {
+    return false;
   }
 
-  return false;
-} 
+  if (minimum != null && value < minimum) {
+    return false;
+  }
+
+  if (maximum != null && value > maximum) {
+    return false;
+  }
+
+  return true;
+}
 
 export default function GameStartModal() {
   const { width, height, mineCount } = useGameConfig();
@@ -51,17 +74,17 @@ export default function GameStartModal() {
       const newHeightNumber = Number(newHeight);
       const newMineCountNumber = Number(newMineCount);
 
-      if (!testInt(newWidthNumber, 4)) {
+      if (!testInt(newWidthNumber, MIN_BOARD_WIDTH, MAX_BOARD_WIDTH)) {
         setErrorMessage('Invalid width');
         return;
       }
 
-      if (!testInt(newHeightNumber, 4)) {
+      if (!testInt(newHeightNumber, MIN_BOARD_HEIGHT, MAX_BOARD_HEIGHT)) {
         setErrorMessage('Invalid height');
         return;
       }
 
-      if (!testInt(newMineCountNumber, 1)) {
+      if (!testInt(newMineCountNumber, MIN_MINE_COUNT, MAX_MINE_COUNT)) {
         setErrorMessage('Invalid mine count');
         return;
       }
@@ -115,7 +138,7 @@ export default function GameStartModal() {
     },
     [],
   );
-  
+
   return (
     <>
       <button type="button" onClick={handleOpenClick} className="primary">New Game</button>
@@ -139,7 +162,7 @@ export default function GameStartModal() {
           <div className="difficulty-options-container vertical-screen-difficulty">
             <h3>For Portrait Screens</h3>
             <CapsuleControl className="difficulty-capsule">
-            <DifficultyButton currentConfig={currentConfig} targetConfig={MOBILE_EASY_CONFIG} onClick={handleDifficultyClick}>
+              <DifficultyButton currentConfig={currentConfig} targetConfig={MOBILE_EASY_CONFIG} onClick={handleDifficultyClick}>
                 Easy
               </DifficultyButton>
               <DifficultyButton currentConfig={currentConfig} targetConfig={MOBILE_MEDIUM_CONFIG} onClick={handleDifficultyClick}>
@@ -153,11 +176,11 @@ export default function GameStartModal() {
 
           <div className="game-config-inputs">
             <label htmlFor="game-config--width">Grid Width</label>
-            <input id="game-config--width" type="number" min={4} value={newWidth} onChange={handleWidthChange} />
+            <input id="game-config--width" type="number" min={MIN_BOARD_WIDTH} max={MAX_BOARD_WIDTH} value={newWidth} onChange={handleWidthChange} />
             <label htmlFor="game-config--height">Grid Height</label>
-            <input id="game-config--height" type="number" min={4} value={newHeight} onChange={handleHeightChange} />
+            <input id="game-config--height" type="number" min={MIN_BOARD_HEIGHT} max={MAX_BOARD_HEIGHT} value={newHeight} onChange={handleHeightChange} />
             <label htmlFor="game-config--mines"># of Mines</label>
-            <input id="game-config--mines" type="number" min={1} value={newMineCount} onChange={handleMineCountChange} />
+            <input id="game-config--mines" type="number" min={MIN_MINE_COUNT} max={MAX_MINE_COUNT} value={newMineCount} onChange={handleMineCountChange} />
           </div>
 
           {errorMessage && (
