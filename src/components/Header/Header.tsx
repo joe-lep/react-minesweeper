@@ -1,5 +1,5 @@
 import './Header.scss';
-import HeaderVector from '../../assets/flag-and-mine-icon.svg?react';
+import HeaderVector from '@/assets/flag-and-mine-icon.svg?react';
 
 export default function Header() {
   return (

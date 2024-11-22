@@ -1,18 +1,19 @@
-import { ReactNode, useCallback, useMemo } from "react";
-import { GameConfig } from "../../types";
-import clsx from "clsx";
+import { ReactNode, useCallback, useMemo } from 'react';
+import clsx from 'clsx';
+
+import { GameConfig } from '@/types';
 
 export interface DifficultyButtonProps {
-  currentConfig: GameConfig
-  targetConfig: GameConfig
-  onClick: (config: GameConfig) => void
-  children?: ReactNode
+  currentConfig: GameConfig;
+  targetConfig: GameConfig;
+  onClick: (config: GameConfig) => void;
+  children?: ReactNode;
 }
 
 export default function DifficultyButton({ currentConfig, targetConfig, onClick, children }: DifficultyButtonProps) {
   const handleClick = useCallback(
     () => {
-      onClick(targetConfig)
+      onClick(targetConfig);
     },
     [onClick, targetConfig],
   );
@@ -25,7 +26,7 @@ export default function DifficultyButton({ currentConfig, targetConfig, onClick,
     },
     [currentConfig, targetConfig],
   );
-  
+
   return (
     <button className={clsx({ active })} onClick={handleClick}>
       {children}

@@ -1,15 +1,19 @@
-import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { StopWatchApi } from "../../types";
+import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { MILLISECS_IN_MINUTE, MILLISECS_IN_SECOND } from '@/config/time-units';
+import { StopWatchApi } from '@/types';
+
+const DEFAULT_SECOND_PAD = 2;
 
 export interface StopWatchProps {
-  className?: string
-  apiRef?: MutableRefObject<StopWatchApi | null>
+  className?: string;
+  apiRef?: MutableRefObject<StopWatchApi | null>;
 }
 
 export default function StopWatch({ className, apiRef }: StopWatchProps) {
   const [isRunning, setIsRunning] = useState(false);
   const [accumulatedTime, setAccumulatedTime] = useState(0);
-  //const [startTime, setStartTime] = useState(0);
+  // const [startTime, setStartTime] = useState(0);
   const animationFrameRef = useRef(0);
   const elRef = useRef<HTMLSpanElement>(null);
 
@@ -17,7 +21,7 @@ export default function StopWatch({ className, apiRef }: StopWatchProps) {
 
   const getTime = useCallback(
     () => {
-      return accumulatedTime + (isRunning ? (Date.now() - startTimeRef.current) : 0)
+      return accumulatedTime + (isRunning ? (Date.now() - startTimeRef.current) : 0);
     },
     [isRunning, accumulatedTime, startTimeRef],
   );
@@ -33,10 +37,10 @@ export default function StopWatch({ className, apiRef }: StopWatchProps) {
     () => {
       const time = getTime();
 
-      const minutes = Math.floor(time / 60000);
-      const seconds = Math.floor((time - minutes * 60000) / 1000);
+      const minutes = Math.floor(time / MILLISECS_IN_MINUTE);
+      const seconds = Math.floor((time - minutes * MILLISECS_IN_MINUTE) / MILLISECS_IN_SECOND);
 
-      return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      return `${minutes}:${seconds.toString().padStart(DEFAULT_SECOND_PAD, '0')}`;
     },
     [getTime],
   );
@@ -48,8 +52,8 @@ export default function StopWatch({ className, apiRef }: StopWatchProps) {
         animationFrameRef.current = requestAnimationFrame(playAnimation);
       }
     },
-    [getFormattedTime, elRef, animationFrameRef]
-  )
+    [getFormattedTime, elRef, animationFrameRef],
+  );
 
   const start = useCallback(
     () => {
@@ -63,15 +67,14 @@ export default function StopWatch({ className, apiRef }: StopWatchProps) {
     () => {
       if (isRunning) {
         setIsRunning(false);
-        setAccumulatedTime(prevState => Date.now() - startTimeRef.current + prevState);
+        setAccumulatedTime((prevState) => Date.now() - startTimeRef.current + prevState);
       }
     },
     [isRunning, setIsRunning, setAccumulatedTime, startTimeRef],
   );
-  
+
   const reset = useCallback(
     () => {
-      console.log('resetting');
       setAccumulatedTime(0);
       startTimeRef.current = Date.now();
     },

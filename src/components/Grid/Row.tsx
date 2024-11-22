@@ -1,9 +1,10 @@
-import { useMemo } from "react";
-import Cell from "./Cell";
+import { useMemo } from 'react';
+
+import Cell from './Cell';
 
 export interface RowProps {
-  rowIndex: number
-  width: number
+  rowIndex: number;
+  width: number;
 }
 
 export default function Row({ rowIndex, width }: RowProps) {
@@ -11,7 +12,7 @@ export default function Row({ rowIndex, width }: RowProps) {
     () => Array.from({ length: width }).map((_, index) => (
       <Cell key={`${rowIndex},${index}`} rowIndex={rowIndex} columnIndex={index} />
     )),
-    [rowIndex, width]
+    [rowIndex, width],
   );
 
   return (

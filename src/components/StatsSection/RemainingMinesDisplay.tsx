@@ -1,10 +1,11 @@
-import MineVector from '../../assets/mine.svg?react';
-import { GAME_WON } from '../../config/game-phases';
+import { GAME_WON } from '@/config/game-phases';
+
+import MineVector from '@/assets/mine.svg?react';
 
 export interface RemainingMinesDisplayProps {
   gamePhase: string;
-  mineCount: number
-  flagCount: number
+  mineCount: number;
+  flagCount: number;
 }
 
 export default function RemainingMinesDisplay({ gamePhase, mineCount, flagCount }: RemainingMinesDisplayProps) {

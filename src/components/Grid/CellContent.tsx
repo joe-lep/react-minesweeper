@@ -1,8 +1,8 @@
-import MineVector from '../../assets/mine.svg?react';
+import MineVector from '@/assets/mine.svg?react';
 
 interface CellContentProps {
-  hasMine: boolean
-  neighboringMineCount: number
+  hasMine: boolean;
+  neighboringMineCount: number;
 }
 
 export default function CellContent({ hasMine, neighboringMineCount }: CellContentProps) {

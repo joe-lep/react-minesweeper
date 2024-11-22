@@ -1,10 +1,11 @@
-import { useMemo } from "react";
-import Row from "./Row";
+import clsx from 'clsx';
+import { TransformComponent } from 'react-zoom-pan-pinch';
+import { useMemo } from 'react';
+
 import './Grid.scss';
-import { useGameConfig, useGamePhase } from "../GameManager";
-import { TransformComponent } from "react-zoom-pan-pinch";
-import { GAME_IN_PROGRESS } from "../../config/game-phases";
-import clsx from "clsx";
+import { useGameConfig, useGamePhase } from '@/components/GameManager';
+import { GAME_IN_PROGRESS } from '@/config/game-phases';
+import Row from './Row';
 
 export default function Grid() {
   const { width, height } = useGameConfig();
@@ -14,7 +15,7 @@ export default function Grid() {
     () => Array.from({ length: height }).map((_, index) => (
       <Row key={`${index}x${width}`} rowIndex={index} width={width} />
     )),
-    [width, height]
+    [width, height],
   );
 
   return (

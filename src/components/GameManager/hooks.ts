@@ -1,8 +1,9 @@
-import { useCallback, useContext, useMemo } from "react";
-import { GameConfig } from "../../types";
-import gameContext from "./context";
-import { GAME_IN_PROGRESS } from "../../config/game-phases";
-import { TOTAL_FLAG_OPTIONS, YES_FLAG } from "../../config/flags";
+import { useCallback, useContext, useMemo } from 'react';
+
+import { TOTAL_FLAG_OPTIONS, YES_FLAG } from '@/config/flags';
+import { GAME_IN_PROGRESS } from '@/config/game-phases';
+import { GameConfig } from '@/types';
+import gameContext from './context';
 
 export const useGameConfig: () => GameConfig = () => {
   const { width, height, mineCount } = useContext(gameContext);
@@ -32,7 +33,7 @@ export const useCellContext = (row: number, column: number) => {
       }
 
       if (isFlagMode || isRightClick) {
-        updateCellFlag(row, column, (cellFlag + 1) % TOTAL_FLAG_OPTIONS)
+        updateCellFlag(row, column, (cellFlag + 1) % TOTAL_FLAG_OPTIONS);
       }
       else {
         if (cellFlag === YES_FLAG) {
@@ -43,11 +44,11 @@ export const useCellContext = (row: number, column: number) => {
       }
     },
     [row, column, gamePhase, isRevealed, isFlagMode, cellFlag, revealCell, updateCellFlag],
-  )
+  );
 
   return useMemo(
     () => ({ isRevealed, hasMine, neighboringMineCount, cellFlag, handleCellClick }),
-    [isRevealed, hasMine, neighboringMineCount, cellFlag, handleCellClick]
+    [isRevealed, hasMine, neighboringMineCount, cellFlag, handleCellClick],
   );
 };
 
@@ -57,7 +58,7 @@ export const useGamePhase = () => useContext(gameContext).gamePhase;
 
 export const useFlagModeState = () => {
   const { isFlagMode, setIsFlagMode } = useContext(gameContext);
-  return useMemo(() => ({ isFlagMode, setIsFlagMode }), [isFlagMode, setIsFlagMode ]);
-}
+  return useMemo(() => ({ isFlagMode, setIsFlagMode }), [isFlagMode, setIsFlagMode]);
+};
 
 export const useMinePositions = () => useContext(gameContext).minePositions;

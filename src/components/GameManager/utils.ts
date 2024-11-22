@@ -1,4 +1,4 @@
-import { CellPosition } from "../../types";
+import { CellPosition } from '@/types';
 
 export function generateMinePositions(mineCount: number, cellCount: number) {
   const positionArray = Array.from({ length: cellCount }).map((_, index) => index);
@@ -19,13 +19,8 @@ export function generateMinePositions(mineCount: number, cellCount: number) {
   return minePositionSet;
 }
 
-export function generateNeighborCounts(minePositionSet: Record<number, boolean>, width: number, height: number) {
-  const cellCount = width * height;
-  const neighborCounts = Array.from({ length: cellCount }).map(
-    (_, index) => countNeighbors(index, minePositionSet, width, height)
-  );
-
-  return neighborCounts;
+function isMinePosition(rowIndex: number, columnIndex: number, minePositionSet: Record<number, boolean>, width: number, height: number) {
+  return rowIndex >= 0 && columnIndex >= 0 && rowIndex < height && columnIndex < width && minePositionSet[rowIndex * width + columnIndex];
 }
 
 function countNeighbors(index: number, minePositionSet: Record<number, boolean>, width: number, height: number) {
@@ -43,8 +38,13 @@ function countNeighbors(index: number, minePositionSet: Record<number, boolean>,
   return neighborCount;
 }
 
-function isMinePosition(rowIndex: number, columnIndex: number, minePositionSet: Record<number, boolean>, width: number, height: number) {
-  return rowIndex >= 0 && columnIndex >= 0 && rowIndex < height && columnIndex < width && minePositionSet[rowIndex * width + columnIndex];
+export function generateNeighborCounts(minePositionSet: Record<number, boolean>, width: number, height: number) {
+  const cellCount = width * height;
+  const neighborCounts = Array.from({ length: cellCount }).map(
+    (_, index) => countNeighbors(index, minePositionSet, width, height),
+  );
+
+  return neighborCounts;
 }
 
 export function searchZeroNeighborCells(neighborCounts: Array<number>, currentCell: CellPosition, cellMap: Record<string, CellPosition>, width: number, height: number) {
@@ -68,7 +68,7 @@ export function searchZeroNeighborCells(neighborCounts: Array<number>, currentCe
   for (let i = -1; i <= 1; i++) {
     for (let j = -1; j <= 1; j++) {
       if (!(i === 0 && j === 0)) {
-        searchZeroNeighborCells(neighborCounts, {row: row + i, column: column + j}, cellMap, width, height);
+        searchZeroNeighborCells(neighborCounts, { row: row + i, column: column + j }, cellMap, width, height);
       }
     }
   }

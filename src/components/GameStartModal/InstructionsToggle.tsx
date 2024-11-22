@@ -1,8 +1,8 @@
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
 export interface InstructionsToggleProps {
-  open: boolean
-  setOpen: (value: boolean) => void
+  open: boolean;
+  setOpen: (value: boolean) => void;
 }
 
 export default function InstructionsToggle({ open, setOpen }: InstructionsToggleProps) {
@@ -12,14 +12,13 @@ export default function InstructionsToggle({ open, setOpen }: InstructionsToggle
     },
     [setOpen],
   );
-  
 
   if (open) {
     return (
       <div className="instructions">
         <p>
           Use the hints provided to try to figure out where the mines are.
-          Click a tile to reveal what's underneath it. If the tile contains a mine, you lose the game.
+          Click a tile to reveal what&apos;s underneath it. If the tile contains a mine, you lose the game.
           If the tile contains a number, that is how many of its neightboring tiles (adjacent and diagonal) contain mines.
           Plant flags on the tiles where you think the mines are.
           Uncover every tile without a mine underneath it to win the game.

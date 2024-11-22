@@ -1,9 +1,11 @@
-import { ChangeEvent, useCallback } from "react";
-import { useFlagModeState } from "../GameManager";
-import clsx from "clsx";
-import PickaxeMonochromeVector from '../../assets/pickaxe-monochrome.svg?react';
-import FlagMonochromeVector from '../../assets/flag-monochrome.svg?react';
-import CapsuleControl from "../CapsuleControl";
+import { ChangeEvent, useCallback } from 'react';
+import clsx from 'clsx';
+
+import CapsuleControl from '@/components/CapsuleControl';
+import { useFlagModeState } from '@/components/GameManager';
+
+import FlagMonochromeVector from '@/assets/flag-monochrome.svg?react';
+import PickaxeMonochromeVector from '@/assets/pickaxe-monochrome.svg?react';
 
 export default function ActionModeSwitch() {
   const { isFlagMode, setIsFlagMode } = useFlagModeState();

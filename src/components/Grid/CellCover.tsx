@@ -1,5 +1,5 @@
 interface CellCoverProps {
-  cellFlag: number
+  cellFlag: number;
 }
 
 const flagDisplayMap: Record<number, string> = {

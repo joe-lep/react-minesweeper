@@ -1,16 +1,17 @@
-import { ReactNode, useCallback, useEffect, useState } from "react";
-import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from "../../config/values";
+import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { useControls } from 'react-zoom-pan-pinch';
+
+import { CellPosition, FlagStateAndCount, GameConfig, RevelationState } from '@/types';
+import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '@/config/values';
+import { GAME_IN_PROGRESS, GAME_LOST, GAME_READY, GAME_WON } from '@/config/game-phases';
+import { generateMinePositions, generateNeighborCounts, searchZeroNeighborCells } from './utils';
+import { NO_FLAG, YES_FLAG } from '@/config/flags';
 import gameContext from './context';
-import { CellPosition, FlagStateAndCount, GameConfig, RevelationState } from "../../types";
-import { generateMinePositions, generateNeighborCounts, searchZeroNeighborCells } from "./utils";
-import { GAME_IN_PROGRESS, GAME_LOST, GAME_READY, GAME_WON } from "../../config/game-phases";
-import { NO_FLAG, YES_FLAG } from "../../config/flags";
-import { useControls } from "react-zoom-pan-pinch";
 
 const { Provider } = gameContext;
 
 export interface GameManagerProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export function GameManager({ children }: GameManagerProps) {
@@ -26,7 +27,7 @@ export function GameManager({ children }: GameManagerProps) {
     flagState: [],
     flagCount: 0,
   });
-  const [gamePhase, setGamePhase] = useState<string>(GAME_READY)
+  const [gamePhase, setGamePhase] = useState<string>(GAME_READY);
   const [mineWasHit, setMineWasHit] = useState(false);
   const [revalationState, setRevelationState] = useState<RevelationState>({
     revealedCells: [],
@@ -41,11 +42,9 @@ export function GameManager({ children }: GameManagerProps) {
   useEffect(() => {
     if (mineWasHit) {
       setGamePhase(GAME_LOST);
-      console.log('LOST');
     }
     else if (revalationState.coveredCellCount <= configState.mineCount) {
       setGamePhase(GAME_WON);
-      console.log('WON');
     }
   }, [mineWasHit, revalationState, configState]);
 
@@ -57,7 +56,7 @@ export function GameManager({ children }: GameManagerProps) {
         newFlagState[rowIndex] = newFlagValue;
         const newFlagCount = prevState.flagCount - (prevState.flagState[rowIndex] === YES_FLAG ? 1 : 0) + (newFlagValue === YES_FLAG ? 1 : 0);
 
-        return { flagState: newFlagState, flagCount: newFlagCount};
+        return { flagState: newFlagState, flagCount: newFlagCount };
       });
     },
     [setFlagStateAndCount, configState],
@@ -67,7 +66,7 @@ export function GameManager({ children }: GameManagerProps) {
     (row: number, column: number) => {
       const cellIndex = row * configState.width + column;
 
-      setRevelationState(prevState => {
+      setRevelationState((prevState) => {
         if (prevState.revealedCells[cellIndex]) {
           return prevState;
         }
@@ -106,11 +105,11 @@ export function GameManager({ children }: GameManagerProps) {
         const currentCell = { row, column };
         const cellMap: Record<string, CellPosition> = {};
 
-        searchZeroNeighborCells(neighborCounts, currentCell, cellMap, configState.width, configState.height)
+        searchZeroNeighborCells(neighborCounts, currentCell, cellMap, configState.width, configState.height);
 
         Object.values(cellMap).forEach((item) => {
           executeRevealCell(item.row, item.column);
-        })
+        });
       }
     },
     [gamePhase, executeRevealCell, minePositions, neighborCounts, configState],
@@ -139,10 +138,10 @@ export function GameManager({ children }: GameManagerProps) {
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [configState],
-  )
+  );
 
   return (
-    <Provider value={{...configState, minePositions, initializeGameConfig, revealedCells: revalationState.revealedCells, revealCell, neighborCounts, flagState, flagCount, updateCellFlag, gamePhase, isFlagMode, setIsFlagMode }}>
+    <Provider value={{ ...configState, minePositions, initializeGameConfig, revealedCells: revalationState.revealedCells, revealCell, neighborCounts, flagState, flagCount, updateCellFlag, gamePhase, isFlagMode, setIsFlagMode }}>
       {children}
     </Provider>
   );
