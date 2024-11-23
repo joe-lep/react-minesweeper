@@ -1,3 +1,5 @@
+@use "@/config/variables.module.scss";
+
 .grid-container {
   grid-area: grid;
   position: relative;
@@ -29,8 +31,8 @@
 .grid {
   display: inline-flex;
   flex-direction: column;
-  border: 2px solid #3f3f43;
-  margin: 64px;
+  border: variables.$grid-border-size solid #3f3f43;
+  margin: variables.$grid-margin;
 
   .row {
     display: flex;
@@ -43,9 +45,9 @@
     position: relative;
     justify-content: center;
     align-items: center;
-    height: 64px;
-    width: 64px;
-    border: 1px solid #3f3f43;
+    height: variables.$cell-height;
+    width: variables.$cell-width;
+    border: variables.$cell-border-size solid #3f3f43;
     font-family: Sono, "Courier New", monospace;
     font-size: 52px;
     font-weight: 700;
@@ -129,5 +131,9 @@
         }
       }
     }
+  }
+
+  &.unpopulated {
+    visibility: hidden;
   }
 }

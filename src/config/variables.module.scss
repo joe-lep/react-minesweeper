@@ -1,0 +1,13 @@
+$cell-width: 64px;
+$cell-height: 64px;
+$cell-border-size: 1px;
+$grid-border-size: 2px;
+$grid-margin: 64px;
+
+:export {
+  cellWidth: $cell-width;
+  cellHeight: $cell-height;
+  cellBorderSize: $cell-border-size;
+  gridBorderSize: $grid-border-size;
+  gridMargin: $grid-margin;
+}

@@ -1,14 +1,32 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { useControls } from 'react-zoom-pan-pinch';
 
+import { cellBorderSize, cellHeight, cellWidth, gridBorderSize, gridMargin } from '@/config/sass-vars';
 import { CellPosition, FlagStateAndCount, GameConfig, RevelationState } from '@/types';
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from '@/config/values';
 import { GAME_IN_PROGRESS, GAME_LOST, GAME_READY, GAME_WON } from '@/config/game-phases';
 import { generateMinePositions, generateNeighborCounts, searchZeroNeighborCells } from './utils';
 import { NO_FLAG, YES_FLAG } from '@/config/flags';
 import gameContext from './context';
+import { ZOOM_ANIMATION_TIME } from '@/config/zoom';
 
 const { Provider } = gameContext;
+
+function getTargetZoom(width: number, height: number) {
+  const gridArea = document.getElementById('grid-container-area');
+  if (!gridArea) {
+    return undefined;
+  }
+
+  const gridAreaRect = gridArea.getBoundingClientRect();
+
+  // eslint-disable-next-line no-magic-numbers
+  const gridWidth = width * (cellWidth + cellBorderSize * 2) + gridBorderSize * 2 + gridMargin * 2;
+  // eslint-disable-next-line no-magic-numbers
+  const gridHeight = height * (cellHeight + cellBorderSize * 2) + gridBorderSize * 2 + gridMargin * 2;
+
+  return Math.min(gridAreaRect.width / gridWidth, gridAreaRect.height / gridHeight);
+}
 
 export interface GameManagerProps {
   children: ReactNode;
@@ -47,6 +65,18 @@ export function GameManager({ children }: GameManagerProps) {
       setGamePhase(GAME_WON);
     }
   }, [mineWasHit, revalationState, configState]);
+
+  useEffect(() => {
+    function handleWindowResize() {
+      centerView(getTargetZoom(configState.width, configState.height), ZOOM_ANIMATION_TIME);
+    }
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, [configState, centerView]);
 
   const updateCellFlag = useCallback(
     (row: number, column: number, newFlagValue: number) => {
@@ -132,12 +162,14 @@ export function GameManager({ children }: GameManagerProps) {
     [setConfigState, setRevelationState, setMinePositions, setNeighborCounts],
   );
 
-  useEffect(
+  useLayoutEffect(
     () => {
-      centerView(undefined, 0);
+      if (configState.mineCount) {
+        centerView(getTargetZoom(configState.width, configState.height), 0);
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [configState],
+    [configState, minePositions],
   );
 
   return (
