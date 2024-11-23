@@ -8,6 +8,7 @@ import { GAME_IN_PROGRESS, GAME_LOST, GAME_READY, GAME_WON } from '@/config/game
 import { generateMinePositions, generateNeighborCounts, searchZeroNeighborCells } from './utils';
 import { NO_FLAG, YES_FLAG } from '@/config/flags';
 import gameContext from './context';
+import { ZOOM_ANIMATION_TIME } from '@/config/zoom';
 
 const { Provider } = gameContext;
 
@@ -64,6 +65,18 @@ export function GameManager({ children }: GameManagerProps) {
       setGamePhase(GAME_WON);
     }
   }, [mineWasHit, revalationState, configState]);
+
+  useEffect(() => {
+    function handleWindowResize() {
+      centerView(getTargetZoom(configState.width, configState.height), ZOOM_ANIMATION_TIME);
+    }
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, [configState, centerView]);
 
   const updateCellFlag = useCallback(
     (row: number, column: number, newFlagValue: number) => {
