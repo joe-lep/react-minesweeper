@@ -1,0 +1,21 @@
+$sm: 640px;
+$md: 1080px;
+$lg: 1440px;
+
+@mixin in-sm {
+  @media (max-width: $sm) {
+    @content;
+  }
+}
+
+@mixin in-md {
+  @media (max-width: $md) {
+    @content;
+  }
+}
+
+@mixin in-lg {
+  @media (max-width: $lg) {
+    @content;
+  }
+}

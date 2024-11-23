@@ -8,7 +8,7 @@ import { GAME_IN_PROGRESS } from '@/config/game-phases';
 import Row from './Row';
 
 export default function Grid() {
-  const { width, height } = useGameConfig();
+  const { width, height, mineCount } = useGameConfig();
   const gamePhase = useGamePhase();
 
   const renderedRows = useMemo(
@@ -19,10 +19,10 @@ export default function Grid() {
   );
 
   return (
-    <div className="grid-container">
+    <div id="grid-container-area" className="grid-container">
       <div className="grid-container-inner">
         <TransformComponent wrapperClass="grid-transform-wrapper">
-          <div className={clsx('grid', { active: gamePhase === GAME_IN_PROGRESS })}>
+          <div className={clsx('grid', { active: gamePhase === GAME_IN_PROGRESS, unpopulated: mineCount === 0 })}>
             {renderedRows}
           </div>
         </TransformComponent>
